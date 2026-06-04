@@ -1,3 +1,4 @@
+using IdentityService.Api.Serialization;
 using SharedKernel.Responses;
 using SharedKernel.Results;
 
@@ -24,7 +25,7 @@ public sealed class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Ex
                 correlationId);
 
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            await context.Response.WriteAsJsonAsync(response);
+            await context.Response.WriteAsJsonAsync(response, IdentityApiJsonSerializerContext.Default.ApiResponseUnit);
         }
     }
 }

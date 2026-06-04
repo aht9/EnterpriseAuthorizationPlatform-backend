@@ -1,4 +1,7 @@
 using FluentValidation;
+using IdentityService.Api.Caching;
+using IdentityService.Api.Serialization;
+using IdentityService.Api.Validation;
 using IdentityService.Application.Common.Abstractions;
 using IdentityService.Application.Features.DisableUser;
 using IdentityService.Application.Features.EnableMfa;
@@ -15,7 +18,7 @@ using IdentityService.Infrastructure.Messaging.Publishers;
 using IdentityService.Infrastructure.Mfa;
 using IdentityService.Infrastructure.Outbox;
 using IdentityService.Infrastructure.Persistence.Repositories;
-using IdentityService.Api.Validation;
+using Microsoft.Extensions.Caching.Memory;
 using SharedKernel.Infrastructure.Messaging;
 using SharedKernel.Infrastructure.Outbox;
 
@@ -29,10 +32,17 @@ public static class ServiceCollectionExtensions
             .BindConfiguration("Jwt")
             .ValidateDataAnnotations()
             .ValidateOnStart();
+        services.ConfigureHttpJsonOptions(options =>
+            options.SerializerOptions.TypeInfoResolverChain.Insert(0, IdentityApiJsonSerializerContext.Default));
+        services.AddMemoryCache();
         services.AddValidatorsFromAssemblyContaining<RegisterRequestValidator>();
         services.AddValidatorsFromAssemblyContaining<RegisterCommandValidator>();
-        services.AddSingleton<IUserRepository, UserRepository>();
-        services.AddSingleton<ISessionRepository, SessionRepository>();
+        services.AddSingleton<UserRepository>();
+        services.AddSingleton<IUserRepository>(provider =>
+            new CachedUserRepository(provider.GetRequiredService<UserRepository>(), provider.GetRequiredService<IMemoryCache>()));
+        services.AddSingleton<SessionRepository>();
+        services.AddSingleton<ISessionRepository>(provider =>
+            new CachedSessionRepository(provider.GetRequiredService<SessionRepository>(), provider.GetRequiredService<IMemoryCache>()));
         services.AddSingleton<IOutboxRepository, InMemoryOutbox>();
         services.AddSingleton<IIdentityUnitOfWork, IdentityUnitOfWork>();
         services.AddSingleton<IPasswordHasher, PasswordHasher>();

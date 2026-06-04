@@ -1,6 +1,8 @@
 using IdentityService.Api.Endpoints;
 using IdentityService.Api.Extensions;
 using IdentityService.Api.Middleware;
+using IdentityService.Api.Contracts.Responses;
+using SharedKernel.Responses;
 
 namespace IdentityService.Api;
 
@@ -26,7 +28,7 @@ public class Program
         app.UseMiddleware<CorrelationIdMiddleware>();
         app.UseMiddleware<TenantMiddleware>();
         
-        app.MapGet("/health", () => Results.Ok(new { service = "identity", status = "healthy" }));
+        app.MapGet("/health", static () => TypedResults.Ok(ApiResponse<CommandStatusResponse>.Ok(new CommandStatusResponse(), Guid.Empty)));
         app.MapAuthEndpoints();
         app.MapSessionEndpoints();
 

@@ -1,3 +1,4 @@
+using IdentityService.Api.Serialization;
 using SharedKernel.Errors;
 using SharedKernel.Responses;
 using SharedKernel.Results;
@@ -30,7 +31,7 @@ public sealed class TenantMiddleware(RequestDelegate next)
                 correlationId);
 
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            await context.Response.WriteAsJsonAsync(response);
+            await context.Response.WriteAsJsonAsync(response, IdentityApiJsonSerializerContext.Default.ApiResponseUnit);
             return;
         }
         context.Items["TenantId"] = tenantId;

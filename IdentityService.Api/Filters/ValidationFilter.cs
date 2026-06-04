@@ -1,3 +1,4 @@
+using IdentityService.Api.Serialization;
 using FluentValidation;
 using SharedKernel.Errors;
 using SharedKernel.Responses;
@@ -30,6 +31,6 @@ public sealed class ValidationFilter<TRequest>(IValidator<TRequest> validator) :
             new ApiError(GeneralErrors.Validation.Code, GeneralErrors.Validation.Description, errors),
             correlationId);
 
-        return Results.BadRequest(response);
+        return TypedResults.BadRequest(response);
     }
 }
