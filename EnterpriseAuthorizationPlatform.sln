@@ -1,0 +1,119 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{26627897-D874-4E8E-A1AA-0D0108DAF748}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "adr", "adr", "{BB999BE6-3DC3-4920-B1C2-2C6BE1C76C81}"
+	ProjectSection(SolutionItems) = preProject
+		..\Enterprise-Authorization-Platform\docs\adr\ADR-001-platform-architecture.md = ..\Enterprise-Authorization-Platform\docs\adr\ADR-001-platform-architecture.md
+		..\Enterprise-Authorization-Platform\docs\adr\ADR-002-event-driven-architecture.md = ..\Enterprise-Authorization-Platform\docs\adr\ADR-002-event-driven-architecture.md
+		..\Enterprise-Authorization-Platform\docs\adr\ADR-003-policy-engine.md = ..\Enterprise-Authorization-Platform\docs\adr\ADR-003-policy-engine.md
+		..\Enterprise-Authorization-Platform\docs\adr\ADR-006-kong-responsibilities.md = ..\Enterprise-Authorization-Platform\docs\adr\ADR-006-kong-responsibilities.md
+		..\Enterprise-Authorization-Platform\docs\adr\ADR-005-decision-cache.md = ..\Enterprise-Authorization-Platform\docs\adr\ADR-005-decision-cache.md
+		..\Enterprise-Authorization-Platform\docs\adr\ADR-004-tenant-isolation.md = ..\Enterprise-Authorization-Platform\docs\adr\ADR-004-tenant-isolation.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ai", "ai", "{55989558-2B81-488D-9357-20F98FD1D273}"
+	ProjectSection(SolutionItems) = preProject
+		..\Enterprise-Authorization-Platform\docs\ai\Folder-Structure.md = ..\Enterprise-Authorization-Platform\docs\ai\Folder-Structure.md
+		..\Enterprise-Authorization-Platform\docs\ai\coding-rules.md = ..\Enterprise-Authorization-Platform\docs\ai\coding-rules.md
+		..\Enterprise-Authorization-Platform\docs\ai\architecture-rules.md = ..\Enterprise-Authorization-Platform\docs\ai\architecture-rules.md
+		..\Enterprise-Authorization-Platform\docs\ai\domain-glossary.md = ..\Enterprise-Authorization-Platform\docs\ai\domain-glossary.md
+		..\Enterprise-Authorization-Platform\docs\ai\project-context.md = ..\Enterprise-Authorization-Platform\docs\ai\project-context.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "architecture", "architecture", "{12762061-B10C-42F2-8545-29372BDFEF38}"
+	ProjectSection(SolutionItems) = preProject
+		..\Enterprise-Authorization-Platform\docs\architecture\production-architecture.md = ..\Enterprise-Authorization-Platform\docs\architecture\production-architecture.md
+		..\Enterprise-Authorization-Platform\docs\architecture\000-system-vision.md = ..\Enterprise-Authorization-Platform\docs\architecture\000-system-vision.md
+		..\Enterprise-Authorization-Platform\docs\architecture\001-architecture-principles.md = ..\Enterprise-Authorization-Platform\docs\architecture\001-architecture-principles.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "diagrams", "diagrams", "{D42F5A27-61A3-4A88-B1B0-0B914C640DE3}"
+	ProjectSection(SolutionItems) = preProject
+		..\Enterprise-Authorization-Platform\docs\diagrams\authorization-flow.md = ..\Enterprise-Authorization-Platform\docs\diagrams\authorization-flow.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "domains", "domains", "{554A1CCB-C8C8-427F-96B8-8640FD860DD2}"
+	ProjectSection(SolutionItems) = preProject
+		..\Enterprise-Authorization-Platform\docs\domains\domain-boundaries.md = ..\Enterprise-Authorization-Platform\docs\domains\domain-boundaries.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "security", "security", "{5D91DAB6-8E58-4824-870B-46E16DB917A1}"
+	ProjectSection(SolutionItems) = preProject
+		..\Enterprise-Authorization-Platform\docs\security\secrets-management.md = ..\Enterprise-Authorization-Platform\docs\security\secrets-management.md
+		..\Enterprise-Authorization-Platform\docs\security\security-model.md = ..\Enterprise-Authorization-Platform\docs\security\security-model.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "specs", "specs", "{A669ED3D-986B-4614-8C7A-870E2F47FE49}"
+	ProjectSection(SolutionItems) = preProject
+		..\Enterprise-Authorization-Platform\docs\specs\infrastructure\rabbitmq-ha.md = ..\Enterprise-Authorization-Platform\docs\specs\infrastructure\rabbitmq-ha.md
+		..\Enterprise-Authorization-Platform\docs\specs\infrastructure\postgresql-ha.md = ..\Enterprise-Authorization-Platform\docs\specs\infrastructure\postgresql-ha.md
+		..\Enterprise-Authorization-Platform\docs\specs\infrastructure\kong-architecture.md = ..\Enterprise-Authorization-Platform\docs\specs\infrastructure\kong-architecture.md
+		..\Enterprise-Authorization-Platform\docs\specs\infrastructure\redis-ha.md = ..\Enterprise-Authorization-Platform\docs\specs\infrastructure\redis-ha.md
+		..\Enterprise-Authorization-Platform\docs\specs\infrastructure\kubernetes-strategy.md = ..\Enterprise-Authorization-Platform\docs\specs\infrastructure\kubernetes-strategy.md
+		..\Enterprise-Authorization-Platform\docs\specs\events\event-catalog.md = ..\Enterprise-Authorization-Platform\docs\specs\events\event-catalog.md
+		..\Enterprise-Authorization-Platform\docs\specs\events\event-envelope.md = ..\Enterprise-Authorization-Platform\docs\specs\events\event-envelope.md
+		..\Enterprise-Authorization-Platform\docs\specs\events\rabbitmq-topology.md = ..\Enterprise-Authorization-Platform\docs\specs\events\rabbitmq-topology.md
+		..\Enterprise-Authorization-Platform\docs\specs\decision-engine-specification.md = ..\Enterprise-Authorization-Platform\docs\specs\decision-engine-specification.md
+		..\Enterprise-Authorization-Platform\docs\specs\role-hierarchy-specification.md = ..\Enterprise-Authorization-Platform\docs\specs\role-hierarchy-specification.md
+		..\Enterprise-Authorization-Platform\docs\specs\delegation-specification.md = ..\Enterprise-Authorization-Platform\docs\specs\delegation-specification.md
+		..\Enterprise-Authorization-Platform\docs\specs\rbac-specification.md = ..\Enterprise-Authorization-Platform\docs\specs\rbac-specification.md
+		..\Enterprise-Authorization-Platform\docs\specs\performance\performance-targets.md = ..\Enterprise-Authorization-Platform\docs\specs\performance\performance-targets.md
+		..\Enterprise-Authorization-Platform\docs\specs\abac-specification.md = ..\Enterprise-Authorization-Platform\docs\specs\abac-specification.md
+		..\Enterprise-Authorization-Platform\docs\specs\domain-contracts.md = ..\Enterprise-Authorization-Platform\docs\specs\domain-contracts.md
+		..\Enterprise-Authorization-Platform\docs\specs\sre\sli-slo.md = ..\Enterprise-Authorization-Platform\docs\specs\sre\sli-slo.md
+		..\Enterprise-Authorization-Platform\docs\specs\audit\audit-architecture.md = ..\Enterprise-Authorization-Platform\docs\specs\audit\audit-architecture.md
+		..\Enterprise-Authorization-Platform\docs\specs\policy\policy-packaging.md = ..\Enterprise-Authorization-Platform\docs\specs\policy\policy-packaging.md
+		..\Enterprise-Authorization-Platform\docs\specs\policy\opa-architecture.md = ..\Enterprise-Authorization-Platform\docs\specs\policy\opa-architecture.md
+		..\Enterprise-Authorization-Platform\docs\specs\permission-governance-specification.md = ..\Enterprise-Authorization-Platform\docs\specs\permission-governance-specification.md
+		..\Enterprise-Authorization-Platform\docs\specs\dr\disaster-recovery.md = ..\Enterprise-Authorization-Platform\docs\specs\dr\disaster-recovery.md
+		..\Enterprise-Authorization-Platform\docs\specs\queries\authorization-queries.md = ..\Enterprise-Authorization-Platform\docs\specs\queries\authorization-queries.md
+		..\Enterprise-Authorization-Platform\docs\specs\resiliency\failure-strategy.md = ..\Enterprise-Authorization-Platform\docs\specs\resiliency\failure-strategy.md
+		..\Enterprise-Authorization-Platform\docs\specs\cache\redis-strategy.md = ..\Enterprise-Authorization-Platform\docs\specs\cache\redis-strategy.md
+		..\Enterprise-Authorization-Platform\docs\specs\cache\authorization-cache-pattern.md = ..\Enterprise-Authorization-Platform\docs\specs\cache\authorization-cache-pattern.md
+		..\Enterprise-Authorization-Platform\docs\specs\api\policy-api.md = ..\Enterprise-Authorization-Platform\docs\specs\api\policy-api.md
+		..\Enterprise-Authorization-Platform\docs\specs\api\identity-api.md = ..\Enterprise-Authorization-Platform\docs\specs\api\identity-api.md
+		..\Enterprise-Authorization-Platform\docs\specs\api\authorization-api.md = ..\Enterprise-Authorization-Platform\docs\specs\api\authorization-api.md
+		..\Enterprise-Authorization-Platform\docs\specs\authorization-specification.md = ..\Enterprise-Authorization-Platform\docs\specs\authorization-specification.md
+		..\Enterprise-Authorization-Platform\docs\specs\observability\observability-strategy.md = ..\Enterprise-Authorization-Platform\docs\specs\observability\observability-strategy.md
+		..\Enterprise-Authorization-Platform\docs\specs\state-machines\policy-state-machine.md = ..\Enterprise-Authorization-Platform\docs\specs\state-machines\policy-state-machine.md
+		..\Enterprise-Authorization-Platform\docs\specs\state-machines\user-state-machine.md = ..\Enterprise-Authorization-Platform\docs\specs\state-machines\user-state-machine.md
+		..\Enterprise-Authorization-Platform\docs\specs\database\erd-authorization.md = ..\Enterprise-Authorization-Platform\docs\specs\database\erd-authorization.md
+		..\Enterprise-Authorization-Platform\docs\specs\database\outbox-pattern.md = ..\Enterprise-Authorization-Platform\docs\specs\database\outbox-pattern.md
+		..\Enterprise-Authorization-Platform\docs\specs\database\database-architecture.md = ..\Enterprise-Authorization-Platform\docs\specs\database\database-architecture.md
+		..\Enterprise-Authorization-Platform\docs\specs\database\tenant-isolation.md = ..\Enterprise-Authorization-Platform\docs\specs\database\tenant-isolation.md
+		..\Enterprise-Authorization-Platform\docs\specs\tenant-specification.md = ..\Enterprise-Authorization-Platform\docs\specs\tenant-specification.md
+		..\Enterprise-Authorization-Platform\docs\specs\commands\policy-commands.md = ..\Enterprise-Authorization-Platform\docs\specs\commands\policy-commands.md
+		..\Enterprise-Authorization-Platform\docs\specs\commands\role-commands.md = ..\Enterprise-Authorization-Platform\docs\specs\commands\role-commands.md
+		..\Enterprise-Authorization-Platform\docs\specs\platform\scaling-strategy.md = ..\Enterprise-Authorization-Platform\docs\specs\platform\scaling-strategy.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F5612784-7923-4527-809E-88B1955F646E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedKernel", "SharedKernel", "{0EA3D0F9-81EF-4FFC-BFAC-6C875E4A4452}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel", "SharedKernel\SharedKernel.csproj", "{616D5E6A-6961-421E-954F-72AC40F44612}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{616D5E6A-6961-421E-954F-72AC40F44612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{616D5E6A-6961-421E-954F-72AC40F44612}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{616D5E6A-6961-421E-954F-72AC40F44612}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{616D5E6A-6961-421E-954F-72AC40F44612}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BB999BE6-3DC3-4920-B1C2-2C6BE1C76C81} = {26627897-D874-4E8E-A1AA-0D0108DAF748}
+		{55989558-2B81-488D-9357-20F98FD1D273} = {26627897-D874-4E8E-A1AA-0D0108DAF748}
+		{12762061-B10C-42F2-8545-29372BDFEF38} = {26627897-D874-4E8E-A1AA-0D0108DAF748}
+		{D42F5A27-61A3-4A88-B1B0-0B914C640DE3} = {26627897-D874-4E8E-A1AA-0D0108DAF748}
+		{554A1CCB-C8C8-427F-96B8-8640FD860DD2} = {26627897-D874-4E8E-A1AA-0D0108DAF748}
+		{5D91DAB6-8E58-4824-870B-46E16DB917A1} = {26627897-D874-4E8E-A1AA-0D0108DAF748}
+		{A669ED3D-986B-4614-8C7A-870E2F47FE49} = {26627897-D874-4E8E-A1AA-0D0108DAF748}
+		{0EA3D0F9-81EF-4FFC-BFAC-6C875E4A4452} = {F5612784-7923-4527-809E-88B1955F646E}
+		{616D5E6A-6961-421E-954F-72AC40F44612} = {0EA3D0F9-81EF-4FFC-BFAC-6C875E4A4452}
+	EndGlobalSection
+EndGlobal
