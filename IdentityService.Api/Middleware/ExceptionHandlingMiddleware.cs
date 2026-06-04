@@ -1,5 +1,5 @@
-
-using SharedKernel.Errors;
+using SharedKernel.Responses;
+using SharedKernel.Results;
 
 namespace IdentityService.Api.Middleware;
 
@@ -13,17 +13,18 @@ public sealed class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Ex
         }
         catch (Exception ex)
         {
-            var (status, error) = ex switch
-            {
-                UnauthorizedAccessException => (StatusCodes.Status401Unauthorized, Error.Unauthorized),
-                ArgumentException => (StatusCodes.Status400BadRequest, new Error("General.Validation", ex.Message)),
-                InvalidOperationException => (StatusCodes.Status409Conflict, new Error("General.Conflict", ex.Message)),
-                KeyNotFoundException => (StatusCodes.Status404NotFound, Error.NotFound),
-                _ => (StatusCodes.Status500InternalServerError, new Error("General.Unexpected", "An unexpected error occurred."))
-            };
-            if (status == StatusCodes.Status500InternalServerError) logger.LogError(ex, "Unhandled identity API exception");
-            context.Response.StatusCode = status;
-            await context.Response.WriteAsJsonAsync(new { success = false, error, correlationId = context.Items["CorrelationId"] });
+            logger.LogError(ex, "Unhandled system exception occurred.");
+
+            var correlationId = context.Items["CorrelationId"] is Guid value
+                ? value
+                : Guid.Empty;
+
+            var response = ApiResponse<Unit>.Fail(
+                new ApiError("Server.InternalError", "An unexpected error occurred."),
+                correlationId);
+
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            await context.Response.WriteAsJsonAsync(response);
         }
     }
 }

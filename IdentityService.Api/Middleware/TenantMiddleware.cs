@@ -1,3 +1,7 @@
+using SharedKernel.Errors;
+using SharedKernel.Responses;
+using SharedKernel.Results;
+
 namespace IdentityService.Api.Middleware;
 
 public sealed class TenantMiddleware(RequestDelegate next)
@@ -17,8 +21,16 @@ public sealed class TenantMiddleware(RequestDelegate next)
         var tenantValue = tenantClaim ?? tenantHeader;
         if (!Guid.TryParse(tenantValue, out var tenantId) || tenantId == Guid.Empty)
         {
+            var correlationId = context.Items["CorrelationId"] is Guid value
+                ? value
+                : Guid.Empty;
+
+            var response = ApiResponse<Unit>.Fail(
+                new ApiError(GeneralErrors.TenantMissing.Code, GeneralErrors.TenantMissing.Description),
+                correlationId);
+
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            await context.Response.WriteAsJsonAsync(new { error = "TenantId is required. Use JWT tenant_id or X-Tenant-Id." });
+            await context.Response.WriteAsJsonAsync(response);
             return;
         }
         context.Items["TenantId"] = tenantId;
