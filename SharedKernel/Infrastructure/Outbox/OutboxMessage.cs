@@ -14,9 +14,15 @@ public sealed class OutboxMessage
     public int Version { get; init; }
     public DateTimeOffset CreatedAt { get; init; } = DateTimeOffset.UtcNow;
     public DateTimeOffset? ProcessedAt { get; private set; }
+    public DateTimeOffset? NextRetryAt { get; private set; }
     public string? Error { get; private set; }
     public int RetryCount { get; private set; }
 
     public void MarkProcessed() => ProcessedAt = DateTimeOffset.UtcNow;
-    public void MarkFailed(string error) { Error = error; RetryCount++; }
+    public void MarkFailed(string error)
+    {
+        Error = error;
+        RetryCount++;
+        NextRetryAt = DateTimeOffset.UtcNow.AddSeconds(Math.Pow(2, RetryCount));
+    }
 }

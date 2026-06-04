@@ -1,13 +1,13 @@
+using SharedKernel.Domain.Guards;
+
 namespace SharedKernel.Domain.Primitives;
 
 public abstract class Entity
 {
     protected Entity(Guid id, Guid tenantId)
     {
-        if (id == Guid.Empty) throw new ArgumentException("Id is required.", nameof(id));
-        if (tenantId == Guid.Empty) throw new ArgumentException("TenantId is required.", nameof(tenantId));
-        Id = id;
-        TenantId = tenantId;
+        Id = Guard.NotEmpty(id, nameof(id));
+        TenantId = Guard.NotEmpty(tenantId, nameof(tenantId));
         CreatedAt = DateTimeOffset.UtcNow;
         UpdatedAt = CreatedAt;
         Version = 1;

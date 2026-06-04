@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SharedKernel.Errors;
 using SharedKernel.Responses;
 using SharedKernel.Results;
 
@@ -27,34 +24,5 @@ public static class ResultExtensions
             validationErrors);
 
         return ApiResponse<T>.Fail(apiError, correlationId);
-    }
-
-    public static int ToHttpStatusCode(this ErrorType errorType) =>
-        errorType switch
-        {
-            ErrorType.Validation => StatusCodes.Status400BadRequest,
-            ErrorType.Unauthorized => StatusCodes.Status401Unauthorized,
-            ErrorType.Forbidden => StatusCodes.Status403Forbidden,
-            ErrorType.NotFound => StatusCodes.Status404NotFound,
-            ErrorType.Conflict => StatusCodes.Status409Conflict,
-            ErrorType.Failure => StatusCodes.Status500InternalServerError,
-            _ => StatusCodes.Status500InternalServerError
-        };
-
-    public static IActionResult ToActionResult<T>(
-        this Result<T> result,
-        ControllerBase controller,
-        Guid correlationId)
-    {
-        ArgumentNullException.ThrowIfNull(controller);
-
-        var response = result.ToApiResponse(correlationId);
-
-        if (result.IsSuccess)
-        {
-            return controller.Ok(response);
-        }
-
-        return controller.StatusCode(result.Error.Type.ToHttpStatusCode(), response);
     }
 }
