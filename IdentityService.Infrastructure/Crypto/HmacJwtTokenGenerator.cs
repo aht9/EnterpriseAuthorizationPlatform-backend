@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -10,9 +11,17 @@ namespace IdentityService.Infrastructure.Crypto;
 
 public sealed class JwtOptions
 {
+    [Required]
     public string Issuer { get; init; } = "enterprise-auth-platform";
+
+    [Required]
     public string Audience { get; init; } = "enterprise-services";
+
+    [Required]
+    [MinLength(32)]
     public string SigningKey { get; init; } = "development-signing-key-change-in-secret-store-minimum-32-bytes";
+
+    [Range(1, 1440)]
     public int AccessTokenMinutes { get; init; } = 15;
 }
 

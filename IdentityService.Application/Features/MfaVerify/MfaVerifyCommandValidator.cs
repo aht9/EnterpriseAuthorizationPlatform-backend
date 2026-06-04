@@ -1,11 +1,13 @@
+using FluentValidation;
+
 namespace IdentityService.Application.Features.MfaVerify;
 
-public static class MfaVerifyCommandValidator
+public sealed class MfaVerifyCommandValidator : AbstractValidator<MfaVerifyCommand>
 {
-    public static void Validate(MfaVerifyCommand command)
+    public MfaVerifyCommandValidator()
     {
-        if (command.Context.TenantId == Guid.Empty) throw new ArgumentException("TenantId is required.");
-        if (command.UserId == Guid.Empty) throw new ArgumentException("UserId is required.");
-        if (string.IsNullOrWhiteSpace(command.Code)) throw new ArgumentException("MFA code is required.");
+        RuleFor(command => command.Context.TenantId).NotEmpty();
+        RuleFor(command => command.UserId).NotEmpty();
+        RuleFor(command => command.Code).NotEmpty();
     }
 }

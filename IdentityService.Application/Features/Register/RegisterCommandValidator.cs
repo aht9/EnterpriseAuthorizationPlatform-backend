@@ -1,12 +1,13 @@
+using FluentValidation;
+
 namespace IdentityService.Application.Features.Register;
 
-public static class RegisterCommandValidator
+public sealed class RegisterCommandValidator : AbstractValidator<RegisterCommand>
 {
-    public static void Validate(RegisterCommand command)
+    public RegisterCommandValidator()
     {
-        if (command.Context.TenantId == Guid.Empty) throw new ArgumentException("TenantId is required.");
-        if (string.IsNullOrWhiteSpace(command.Email)) throw new ArgumentException("Email is required.");
-        if (string.IsNullOrWhiteSpace(command.Password) || command.Password.Length < 12)
-            throw new ArgumentException("Password must be at least 12 characters.");
+        RuleFor(command => command.Context.TenantId).NotEmpty();
+        RuleFor(command => command.Email).NotEmpty().EmailAddress();
+        RuleFor(command => command.Password).NotEmpty().MinimumLength(12);
     }
 }

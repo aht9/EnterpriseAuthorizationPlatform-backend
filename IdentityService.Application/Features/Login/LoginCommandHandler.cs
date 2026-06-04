@@ -4,6 +4,8 @@ using IdentityService.Domain.Aggregates.User;
 using IdentityService.Domain.Repositories;
 using IdentityService.Domain.Services;
 using IdentityService.Domain.ValueObjects;
+using SharedKernel.Errors;
+using SharedKernel.Results;
 
 namespace IdentityService.Application.Features.Login;
 
@@ -13,14 +15,12 @@ public sealed class LoginCommandHandler(
     IPasswordHasher passwordHasher,
     ITokenGenerator tokenGenerator,
     IMfaProvider mfaProvider,
-    IIdentityUnitOfWork unitOfWork,
-    IAuditSink auditSink)
+    IIdentityUnitOfWork unitOfWork)
 {
     private static readonly TimeSpan RefreshTokenLifetime = TimeSpan.FromDays(14);
 
-    public async Task<LoginResponse> HandleAsync(LoginCommand command, CancellationToken cancellationToken)
+    public async Task<Result<LoginResponse>> HandleAsync(LoginCommand command, CancellationToken cancellationToken)
     {
-        LoginCommandValidator.Validate(command);
         var email = Email.Create(command.Email);
         var user = await users.GetByEmailAsync(command.Context.TenantId, email, cancellationToken);
         if (user is null || user.Status == UserStatus.Disabled || !passwordHasher.Verify(command.Password, user.PasswordHash.Value))
@@ -32,8 +32,7 @@ public sealed class LoginCommandHandler(
                 await unitOfWork.SaveChangesAsync(user.DomainEvents, cancellationToken);
                 user.ClearDomainEvents();
             }
-            await auditSink.RecordAsync("IdentityService.login_failed", command.Context.TenantId, command.Context.CorrelationId, user?.Id, false, "Invalid credentials", cancellationToken);
-            throw new UnauthorizedAccessException("Invalid credentials.");
+            return Result<LoginResponse>.Failure(GeneralErrors.Unauthorized);
         }
 
         if (user.MfaSettings.IsEnabled)
@@ -43,28 +42,27 @@ public sealed class LoginCommandHandler(
                 user.ChallengeMfa(command.Context.CorrelationId);
                 await users.UpdateAsync(user, cancellationToken);
                 await unitOfWork.SaveChangesAsync(user.DomainEvents, cancellationToken);
-                await auditSink.RecordAsync("IdentityService.mfa_required", user.TenantId, command.Context.CorrelationId, user.Id, true, null, cancellationToken);
                 user.ClearDomainEvents();
-                return new LoginResponse(string.Empty, string.Empty, DateTimeOffset.MinValue, Guid.Empty, true);
+                return Result<LoginResponse>.Success(new LoginResponse(string.Empty, string.Empty, DateTimeOffset.MinValue, Guid.Empty, true));
             }
 
             if (!mfaProvider.VerifyCode(user.MfaSettings.Secret!, command.MfaCode, DateTimeOffset.UtcNow))
             {
-                await auditSink.RecordAsync("IdentityService.mfa_failed", user.TenantId, command.Context.CorrelationId, user.Id, false, "Invalid MFA code", cancellationToken);
-                throw new UnauthorizedAccessException("Invalid MFA code.");
+                return Result<LoginResponse>.Failure(GeneralErrors.Unauthorized);
             }
             user.VerifyMfa(command.Context.CorrelationId);
         }
 
         var (session, refreshToken) = Session.Create(user.TenantId, user.Id, RefreshTokenLifetime, command.Context.IpAddress, command.Context.UserAgent);
         user.RecordSuccessfulLogin(session.Id, command.Context.CorrelationId);
+        await unitOfWork.BeginTransactionAsync(cancellationToken);
         await sessions.AddAsync(session, cancellationToken);
         await users.UpdateAsync(user, cancellationToken);
         await unitOfWork.SaveChangesAsync(user.DomainEvents.Concat(session.DomainEvents).ToArray(), cancellationToken);
+        await unitOfWork.CommitTransactionAsync(cancellationToken);
         var accessToken = tokenGenerator.GenerateAccessToken(user, session, command.Context.CorrelationId);
-        await auditSink.RecordAsync("IdentityService.login_succeeded", user.TenantId, command.Context.CorrelationId, user.Id, true, null, cancellationToken);
         user.ClearDomainEvents();
         session.ClearDomainEvents();
-        return new LoginResponse(accessToken.AccessToken, refreshToken, accessToken.ExpiresAt, session.Id, false);
+        return Result<LoginResponse>.Success(new LoginResponse(accessToken.AccessToken, refreshToken, accessToken.ExpiresAt, session.Id, false));
     }
 }

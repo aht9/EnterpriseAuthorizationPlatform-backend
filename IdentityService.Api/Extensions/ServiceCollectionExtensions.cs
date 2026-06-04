@@ -1,3 +1,4 @@
+using FluentValidation;
 using IdentityService.Application.Common.Abstractions;
 using IdentityService.Application.Features.DisableUser;
 using IdentityService.Application.Features.EnableMfa;
@@ -14,6 +15,7 @@ using IdentityService.Infrastructure.Messaging.Publishers;
 using IdentityService.Infrastructure.Mfa;
 using IdentityService.Infrastructure.Outbox;
 using IdentityService.Infrastructure.Persistence.Repositories;
+using IdentityService.Api.Validation;
 using SharedKernel.Infrastructure.Messaging;
 using SharedKernel.Infrastructure.Outbox;
 
@@ -23,7 +25,12 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddIdentityService(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
+        services.AddOptions<JwtOptions>()
+            .BindConfiguration("Jwt")
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+        services.AddValidatorsFromAssemblyContaining<RegisterRequestValidator>();
+        services.AddValidatorsFromAssemblyContaining<RegisterCommandValidator>();
         services.AddSingleton<IUserRepository, UserRepository>();
         services.AddSingleton<ISessionRepository, SessionRepository>();
         services.AddSingleton<IOutboxRepository, InMemoryOutbox>();

@@ -24,6 +24,8 @@ public sealed class InMemoryOutbox : IOutboxRepository
 
 public sealed class IdentityUnitOfWork(IOutboxRepository outboxRepository) : IIdentityUnitOfWork
 {
+    public Task BeginTransactionAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+
     public async Task SaveChangesAsync(IReadOnlyCollection<IDomainEvent> domainEvents, CancellationToken cancellationToken)
     {
         foreach (var domainEvent in domainEvents)
@@ -41,6 +43,8 @@ public sealed class IdentityUnitOfWork(IOutboxRepository outboxRepository) : IId
             }, cancellationToken);
         }
     }
+
+    public Task CommitTransactionAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
     private static string ToEventType(IDomainEvent domainEvent) => domainEvent.GetType().Name switch
     {

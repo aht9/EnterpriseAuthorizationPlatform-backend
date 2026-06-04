@@ -1,11 +1,13 @@
+using FluentValidation;
+
 namespace IdentityService.Application.Features.Login;
 
-public static class LoginCommandValidator
+public sealed class LoginCommandValidator : AbstractValidator<LoginCommand>
 {
-    public static void Validate(LoginCommand command)
+    public LoginCommandValidator()
     {
-        if (command.Context.TenantId == Guid.Empty) throw new ArgumentException("TenantId is required.");
-        if (string.IsNullOrWhiteSpace(command.Email)) throw new ArgumentException("Email is required.");
-        if (string.IsNullOrWhiteSpace(command.Password)) throw new ArgumentException("Password is required.");
+        RuleFor(command => command.Context.TenantId).NotEmpty();
+        RuleFor(command => command.Email).NotEmpty().EmailAddress();
+        RuleFor(command => command.Password).NotEmpty();
     }
 }

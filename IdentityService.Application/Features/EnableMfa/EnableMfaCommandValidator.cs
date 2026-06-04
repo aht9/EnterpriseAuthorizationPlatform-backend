@@ -1,11 +1,13 @@
+using FluentValidation;
+
 namespace IdentityService.Application.Features.EnableMfa;
 
-public static class EnableMfaCommandValidator
+public sealed class EnableMfaCommandValidator : AbstractValidator<EnableMfaCommand>
 {
-    public static void Validate(EnableMfaCommand command)
+    public EnableMfaCommandValidator()
     {
-        if (command.Context.TenantId == Guid.Empty) throw new ArgumentException("TenantId is required.");
-        if (command.UserId == Guid.Empty) throw new ArgumentException("UserId is required.");
-        if (string.IsNullOrWhiteSpace(command.Secret)) throw new ArgumentException("MFA secret is required.");
+        RuleFor(command => command.Context.TenantId).NotEmpty();
+        RuleFor(command => command.UserId).NotEmpty();
+        RuleFor(command => command.Secret).NotEmpty();
     }
 }

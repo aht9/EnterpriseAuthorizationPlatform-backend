@@ -1,10 +1,12 @@
+using FluentValidation;
+
 namespace IdentityService.Application.Features.DisableUser;
 
-public static class DisableUserCommandValidator
+public sealed class DisableUserCommandValidator : AbstractValidator<DisableUserCommand>
 {
-    public static void Validate(DisableUserCommand command)
+    public DisableUserCommandValidator()
     {
-        if (command.Context.TenantId == Guid.Empty) throw new ArgumentException("TenantId is required.");
-        if (command.UserId == Guid.Empty) throw new ArgumentException("UserId is required.");
+        RuleFor(command => command.Context.TenantId).NotEmpty();
+        RuleFor(command => command.UserId).NotEmpty();
     }
 }
