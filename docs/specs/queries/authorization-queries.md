@@ -1,0 +1,14 @@
+
+
+```
+GetUserPermissions
+
+GetUserRoles
+
+GetPermissionSources
+
+GetPolicyDecision
+
+```
+
+----

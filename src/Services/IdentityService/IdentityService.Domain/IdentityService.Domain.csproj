@@ -7,11 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\IdentityService.Domain\IdentityService.Domain.csproj" />
+      <ProjectReference Include="..\..\..\SharedKernel\SharedKernel.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="FluentValidation" Version="12.0.0" />
-    </ItemGroup>
 
 </Project>
