@@ -1,0 +1,8 @@
+using AuthorizationService.Application.Common.Abstractions;
+using AuthorizationService.Application.Features.EvaluateAuthorizationDecision;
+using MediatR;
+using SharedKernel.Results;
+
+namespace AuthorizationService.Application.Features.EvaluateBatchAuthorizationDecisions;
+
+public sealed record EvaluateBatchAuthorizationDecisionsCommand(IReadOnlyCollection<EvaluateAuthorizationDecisionCommand> Decisions, RequestContext Context) : IRequest<Result<EvaluateBatchAuthorizationDecisionsResponse>>;

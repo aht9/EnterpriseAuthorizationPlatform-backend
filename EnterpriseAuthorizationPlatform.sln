@@ -21,6 +21,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedKernel", "SharedKerne
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityService", "IdentityService", "{B3C16100-143A-47DF-9751-E4632B8A4378}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthorizationService", "AuthorizationService", "{E88B3451-DC0F-4AC0-B077-FC71580B71CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthorizationService.Domain", "src\Services\AuthorizationService\AuthorizationService.Domain\AuthorizationService.Domain.csproj", "{DBB46827-DE76-4278-A66B-E1A1D25C8E7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthorizationService.Application", "src\Services\AuthorizationService\AuthorizationService.Application\AuthorizationService.Application.csproj", "{7DC9AB95-0693-4C46-B3D1-19BD8CAA2776}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthorizationService.Infrastructure", "src\Services\AuthorizationService\AuthorizationService.Infrastructure\AuthorizationService.Infrastructure.csproj", "{3CC5B034-4D32-46F0-89D9-7064187D4F49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthorizationService.Api", "src\Services\AuthorizationService\AuthorizationService.Api\AuthorizationService.Api.csproj", "{CA3F2481-14AD-4DAC-85E5-BCB2B7704397}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BAFCF86B-5F97-45B2-9B22-2D9DBA9E8CF2}"
+	ProjectSection(SolutionItems) = preProject
+		compose.yaml = compose.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +66,22 @@ Global
 		{289BE3CE-CF5A-46F2-96E8-737746460D0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{289BE3CE-CF5A-46F2-96E8-737746460D0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{289BE3CE-CF5A-46F2-96E8-737746460D0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBB46827-DE76-4278-A66B-E1A1D25C8E7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBB46827-DE76-4278-A66B-E1A1D25C8E7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBB46827-DE76-4278-A66B-E1A1D25C8E7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBB46827-DE76-4278-A66B-E1A1D25C8E7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DC9AB95-0693-4C46-B3D1-19BD8CAA2776}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DC9AB95-0693-4C46-B3D1-19BD8CAA2776}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DC9AB95-0693-4C46-B3D1-19BD8CAA2776}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DC9AB95-0693-4C46-B3D1-19BD8CAA2776}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CC5B034-4D32-46F0-89D9-7064187D4F49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CC5B034-4D32-46F0-89D9-7064187D4F49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CC5B034-4D32-46F0-89D9-7064187D4F49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CC5B034-4D32-46F0-89D9-7064187D4F49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA3F2481-14AD-4DAC-85E5-BCB2B7704397}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA3F2481-14AD-4DAC-85E5-BCB2B7704397}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA3F2481-14AD-4DAC-85E5-BCB2B7704397}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA3F2481-14AD-4DAC-85E5-BCB2B7704397}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0EA3D0F9-81EF-4FFC-BFAC-6C875E4A4452} = {F5612784-7923-4527-809E-88B1955F646E}
@@ -65,5 +96,10 @@ Global
 		{8249F4DA-2F35-4E1F-B3EB-E709D86B4FFD} = {B3C16100-143A-47DF-9751-E4632B8A4378}
 		{289BE3CE-CF5A-46F2-96E8-737746460D0E} = {B3C16100-143A-47DF-9751-E4632B8A4378}
 		{616D5E6A-6961-421E-954F-72AC40F44612} = {68C80614-E1F4-40AC-AA9A-8818BB06F516}
+		{E88B3451-DC0F-4AC0-B077-FC71580B71CB} = {7E92E0B7-6C1D-4017-B7D0-776674064879}
+		{DBB46827-DE76-4278-A66B-E1A1D25C8E7F} = {E88B3451-DC0F-4AC0-B077-FC71580B71CB}
+		{7DC9AB95-0693-4C46-B3D1-19BD8CAA2776} = {E88B3451-DC0F-4AC0-B077-FC71580B71CB}
+		{3CC5B034-4D32-46F0-89D9-7064187D4F49} = {E88B3451-DC0F-4AC0-B077-FC71580B71CB}
+		{CA3F2481-14AD-4DAC-85E5-BCB2B7704397} = {E88B3451-DC0F-4AC0-B077-FC71580B71CB}
 	EndGlobalSection
 EndGlobal

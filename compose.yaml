@@ -1,0 +1,7 @@
+﻿services:
+  authorizationservice.api:
+    image: authorizationservice.api
+    build:
+      context: .
+      dockerfile: src/Services/AuthorizationService/AuthorizationService.Api/Dockerfile
+
