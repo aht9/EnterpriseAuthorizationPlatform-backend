@@ -1,31 +1,30 @@
-using System.Collections.Concurrent;
 using IdentityService.Domain.Aggregates.Session;
 using IdentityService.Domain.Repositories;
+using IdentityService.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdentityService.Infrastructure.Persistence.Repositories;
 
-public sealed class SessionRepository : ISessionRepository
+public sealed class SessionRepository(IdentityDbContext dbContext) : ISessionRepository
 {
-    private readonly ConcurrentDictionary<(Guid TenantId, Guid SessionId), Session> sessionsById = new();
-
-    public Task AddAsync(Session session, CancellationToken cancellationToken)
-    {
-        if (!sessionsById.TryAdd((session.TenantId, session.Id), session)) throw new InvalidOperationException("Session already exists.");
-        return Task.CompletedTask;
-    }
-
-    public Task<Session?> GetByIdAsync(Guid tenantId, Guid sessionId, CancellationToken cancellationToken)
-    {
-        sessionsById.TryGetValue((tenantId, sessionId), out var session);
-        return Task.FromResult(session);
-    }
+    public Task<Session?> GetByIdAsync(Guid tenantId, Guid sessionId, CancellationToken cancellationToken) =>
+        dbContext.Sessions
+            .AsNoTracking()
+            .FirstOrDefaultAsync(session => session.TenantId == tenantId && session.Id == sessionId, cancellationToken);
 
     public Task<Session?> GetByRefreshTokenAsync(Guid tenantId, string refreshToken, CancellationToken cancellationToken) =>
-        Task.FromResult(sessionsById.Values.FirstOrDefault(session => session.TenantId == tenantId && session.MatchesRefreshToken(refreshToken)));
+        dbContext.Sessions
+            .AsNoTracking()
+            .FirstOrDefaultAsync(session => session.TenantId == tenantId && session.RefreshTokenHash == RefreshToken.Hash(refreshToken), cancellationToken);
+
+    public async Task AddAsync(Session session, CancellationToken cancellationToken)
+    {
+        await dbContext.Sessions.AddAsync(session, cancellationToken);
+    }
 
     public Task UpdateAsync(Session session, CancellationToken cancellationToken)
     {
-        sessionsById[(session.TenantId, session.Id)] = session;
+        dbContext.Sessions.Update(session);
         return Task.CompletedTask;
     }
 }

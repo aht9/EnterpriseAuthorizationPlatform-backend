@@ -1,35 +1,36 @@
-using System.Collections.Concurrent;
 using IdentityService.Domain.Aggregates.User;
 using IdentityService.Domain.Repositories;
 using IdentityService.Domain.ValueObjects;
+using IdentityService.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdentityService.Infrastructure.Persistence.Repositories;
 
-public sealed class UserRepository : IUserRepository
+public sealed class UserRepository(IdentityDbContext dbContext) : IUserRepository
 {
-    private readonly ConcurrentDictionary<(Guid TenantId, Guid UserId), User> usersById = new();
-
-    public Task AddAsync(User user, CancellationToken cancellationToken)
-    {
-        if (!usersById.TryAdd((user.TenantId, user.Id), user)) throw new InvalidOperationException("User already exists.");
-        return Task.CompletedTask;
-    }
-
-    public Task<bool> ExistsByEmailAsync(Guid tenantId, Email email, CancellationToken cancellationToken) =>
-        Task.FromResult(usersById.Values.Any(user => user.TenantId == tenantId && user.Email == email && !user.IsDeleted));
+    public Task<User?> GetByIdAsync(Guid tenantId, Guid userId, CancellationToken cancellationToken) =>
+        dbContext.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(user => user.TenantId == tenantId && user.Id == userId, cancellationToken);
 
     public Task<User?> GetByEmailAsync(Guid tenantId, Email email, CancellationToken cancellationToken) =>
-        Task.FromResult(usersById.Values.FirstOrDefault(user => user.TenantId == tenantId && user.Email == email && !user.IsDeleted));
+        dbContext.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(user => user.TenantId == tenantId && user.Email == email, cancellationToken);
 
-    public Task<User?> GetByIdAsync(Guid tenantId, Guid userId, CancellationToken cancellationToken)
+    public Task<bool> ExistsByEmailAsync(Guid tenantId, Email email, CancellationToken cancellationToken) =>
+        dbContext.Users
+            .AsNoTracking()
+            .AnyAsync(user => user.TenantId == tenantId && user.Email == email, cancellationToken);
+
+    public async Task AddAsync(User user, CancellationToken cancellationToken)
     {
-        usersById.TryGetValue((tenantId, userId), out var user);
-        return Task.FromResult(user is { IsDeleted: false } ? user : null);
+        await dbContext.Users.AddAsync(user, cancellationToken);
     }
 
     public Task UpdateAsync(User user, CancellationToken cancellationToken)
     {
-        usersById[(user.TenantId, user.Id)] = user;
+        dbContext.Users.Update(user);
         return Task.CompletedTask;
     }
 }
