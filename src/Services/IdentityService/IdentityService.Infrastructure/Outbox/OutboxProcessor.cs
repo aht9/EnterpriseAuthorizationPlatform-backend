@@ -15,7 +15,7 @@ public sealed class OutboxRepository(IdentityDbContext dbContext) : IOutboxRepos
     public async Task<IReadOnlyCollection<OutboxMessage>> GetPendingAsync(int batchSize, CancellationToken cancellationToken) =>
         await dbContext.OutboxMessages
             .AsNoTracking()
-            .Where(message => message.ProcessedAt is null && (message.NextRetryAt == null || message.NextRetryAt <= DateTimeOffset.UtcNow))
+            .Where(message => message.ProcessedAt == null && (message.NextRetryAt == null || message.NextRetryAt <= DateTimeOffset.UtcNow))
             .OrderBy(message => message.CreatedAt)
             .Take(batchSize)
             .ToArrayAsync(cancellationToken);
